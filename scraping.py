@@ -56,6 +56,7 @@ def getSupportSenadores(url):
         mySupport = [name.text]
         supports = soup.find('table', id=name.text).findAll('tr')
         
+        #print("------")
         for support in supports:
             dataSupport = []
 
@@ -69,6 +70,7 @@ def getSupportSenadores(url):
         mySupportData.append(mySupport)
         #print(mySupport)
     
+    #print(mySupportData)
     return mySupportData
 
 def getExternalConsults(url):
@@ -95,6 +97,7 @@ def getExternalConsults(url):
         myExternalAsesor.append(myAsesor)
         #print(myAsesor)
     
+    #print(myExternalAsesor)
     return myExternalAsesor
 
 def getOperationalExpenses(url):
@@ -136,6 +139,7 @@ def getVotesInSesions(url):
         soupOption = parsedUrl(urlLegislature)
         sesions = soupOption.find('select', attrs={"name":"sesionessala"})
         sesionsOptions = sesions('option')
+        #print(sesionsOptions)
 
         for optionS in sesionsOptions:
             countAux = 0
@@ -152,7 +156,7 @@ def getVotesInSesions(url):
                     this = dataSesion(option.text, optionS.text, topic.text.strip(), resumeData[countAux].text, resumeData[countAux + 1].text,
                                       resumeData[countAux + 2].text, resumeData[countAux + 3].text, resumeData[countAux + 4].text,
                                       resumeData[countAux + 5].text)
-                    
+                    #print(topic.text)
                     urlVotation = url + votes[countVotes]['href']
                     print(urlVotation)
                     soupVotation = parsedUrl(urlVotation)
@@ -171,7 +175,7 @@ def getVotesInSesions(url):
                                     attrs.append("Si")
                                 elif(countAttrs == 2):
                                     attrs.append("No")
-                                elif(countAttrs == 3):
+                                if(countAttrs == 3):
                                     attrs.append("Abstención")
                                 elif(countAttrs == 4):
                                     attrs.append("Pareo")
@@ -186,17 +190,20 @@ def getVotesInSesions(url):
 
                     print(this.topic)
                     print(this.votesSesions)
+        
+
+
 
 def getDataSenadores():
     print("TRANSAPARENCIA")
     print("Cargando salarios")
-    salaries = getSalary(links[0])
+    #salaries = getSalary(links[0])
     print("Cargando Personal de apoyo")
-    supports = getSupportSenadores(links[1])
+    #supports = getSupportSenadores(links[1])
     print("Cargando Asesorias Externas")
-    asesorExternal = getExternalConsults(links[2])
+    #asesorExternal = getExternalConsults(links[2])
     print("Cargando Gastos Operacionales")
-    opExpenses = getOperationalExpenses(links[3])
+    #opExpenses = getOperationalExpenses(links[3])
     print("Cargando Votaciones de Senadores")
     votes = getVotesInSesions(links[4])
     print("END TRANSAPARENCIA")
